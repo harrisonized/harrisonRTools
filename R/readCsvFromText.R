@@ -14,9 +14,11 @@ readCsvFromText <- function(
     skipcols=0, ncols=NULL,
     index=NULL,
     columns=NULL
-)  {
-
-    rawData <- readLines(file(filepath, encoding=encoding))
+) {
+	
+    con = file(filePath, encoding=encoding)
+    rawData <- readLines(con)
+    close(con)
     
     # autodetermine ranges if not specified
     if(is.null(nrows)) {
