@@ -7,6 +7,7 @@
 #'            index=LETTERS[1:8],
 #'            columns=seq(1, 12)
 #' )
+#' @export readCsvFromText
 readCsvFromText <- function(
     filePath,
     encoding='UTF-16', sep='\t',
