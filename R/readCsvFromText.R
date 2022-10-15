@@ -17,7 +17,8 @@ readCsvFromText <- function(
     skiprows=0, nrows=NULL,
     skipcols=0, ncols=NULL,
     index=NULL,
-    columns=NULL
+    columns=NULL,
+    numeric=FALSE
 ) {
 
     con = file(filePath, encoding=encoding)
@@ -43,6 +44,10 @@ readCsvFromText <- function(
     # rename columns
     colnames(df) <- columns
     rownames(df) <- index
+
+    if(numeric) {
+        df[] <- lapply(df, function(x) as.numeric(as.character(x)))
+    }
 
     return(df)
 }

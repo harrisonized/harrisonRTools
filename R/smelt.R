@@ -8,7 +8,7 @@ smelt <- function(
    df,
    rowname='row',
    colname='col',
-   valname='values'
+   valname='val'
 ) {
    melted <- transform(stack(setNames(df, colnames(df))), id=rownames(df))
    colnames(melted) <- c(valname, colname, rowname)

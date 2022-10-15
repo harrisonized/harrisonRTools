@@ -13,7 +13,8 @@ readCsvFromText(
   skipcols = 0,
   ncols = NULL,
   index = NULL,
-  columns = NULL
+  columns = NULL,
+  numeric = FALSE
 )
 }
 \description{

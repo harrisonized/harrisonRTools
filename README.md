@@ -14,7 +14,7 @@ install.packages('~/github/R/harrisonrutils', repos=NULL, type='source')
 Call the library from your RStudio console:
 
 ```R
-library('harrisonrutils')
+library(harrisonrutils)
 ```
 
 

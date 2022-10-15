@@ -4,7 +4,7 @@
 \alias{smelt}
 \title{special melt}
 \usage{
-smelt(df, rowname = "row", colname = "col", valname = "values")
+smelt(df, rowname = "row", colname = "col", valname = "val")
 }
 \description{
 convert a dataframe from a table to long format \cr
