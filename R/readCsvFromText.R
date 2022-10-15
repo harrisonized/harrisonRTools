@@ -1,5 +1,8 @@
+#' readCsvFromText
+#' @description
 #' Convenience function for reading text files where csv may be embedded
 #' Use the following settings for 96-well plates:
+#' @examples
 #' df <- read_csv_from_txt(
 #'            filePath,
 #'            skiprows=3, nrows=8,
@@ -16,7 +19,7 @@ readCsvFromText <- function(
     index=NULL,
     columns=NULL
 ) {
-	
+
     con = file(filePath, encoding=encoding)
     rawData <- readLines(con)
     close(con)
@@ -40,6 +43,6 @@ readCsvFromText <- function(
     # rename columns
     colnames(df) <- columns
     rownames(df) <- index
-          
+
     return(df)
 }

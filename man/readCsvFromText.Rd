@@ -2,15 +2,7 @@
 % Please edit documentation in R/readCsvFromText.R
 \name{readCsvFromText}
 \alias{readCsvFromText}
-\title{Convenience function for reading text files where csv may be embedded
-Use the following settings for 96-well plates:
-df <- read_csv_from_txt(
-filePath,
-skiprows=3, nrows=8,
-skipcols=2, ncols=12,
-index=LETTERS\link{1:8},
-columns=seq(1, 12)
-)}
+\title{readCsvFromText}
 \usage{
 readCsvFromText(
   filePath,
@@ -27,11 +19,13 @@ readCsvFromText(
 \description{
 Convenience function for reading text files where csv may be embedded
 Use the following settings for 96-well plates:
+}
+\examples{
 df <- read_csv_from_txt(
-filePath,
-skiprows=3, nrows=8,
-skipcols=2, ncols=12,
-index=LETTERS\link{1:8},
-columns=seq(1, 12)
+           filePath,
+           skiprows=3, nrows=8,
+           skipcols=2, ncols=12,
+           index=LETTERS[1:8],
+           columns=seq(1, 12)
 )
 }
