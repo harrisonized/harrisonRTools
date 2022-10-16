@@ -4,12 +4,15 @@
 #' @export readText
 readText <- function(
     filePath,
-    encoding='UTF-8'
+    encoding='UTF-8',
+    sep='\n'
 ) {
 
     con = file(filePath, encoding=encoding)
-    rawData <- readLines(con)
+    lines <- readLines(con)
     close(con)
 
-    return(rawData)
+    rawString <- paste(lines, collapse = sep)
+
+    return(rawString)
 }

@@ -4,7 +4,7 @@
 \alias{readText}
 \title{readText}
 \usage{
-readText(filePath, encoding = "UTF-8")
+readText(filePath, encoding = "UTF-8", sep = "\\n")
 }
 \description{
 Convenience function for reading text files as string
