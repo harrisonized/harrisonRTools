@@ -22,7 +22,7 @@ Convenience function for reading text files where csv may be embedded
 Use the following settings for 96-well plates:
 }
 \examples{
-df <- read_csv_from_txt(
+df <- readCsvFromText(
            filePath,
            skiprows=3, nrows=8,
            skipcols=2, ncols=12,

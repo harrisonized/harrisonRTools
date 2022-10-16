@@ -2,6 +2,7 @@
 
 export(plotHeatmap)
 export(readCsvFromText)
+export(readText)
 export(revDf)
 export(smelt)
 import(ggplot2)
