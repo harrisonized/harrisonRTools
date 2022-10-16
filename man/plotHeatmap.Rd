@@ -4,8 +4,21 @@
 \alias{plotHeatmap}
 \title{plotHeatmap}
 \usage{
-plotHeatmap(df)
+plotHeatmap(
+  df,
+  x = "col",
+  y = "row",
+  fill = "val",
+  title = NULL,
+  show_xlabel = TRUE,
+  show_ylabel = TRUE,
+  annotations = FALSE,
+  scientific_notation = FALSE
+)
 }
 \description{
 plots a heatmap
+}
+\examples{
+plotHeatmap(df, title="Raw Data", show_xlabel=TRUE, show_ylabel=TRUE, scientific_notation=FALSE, annotations=TRUE)
 }
