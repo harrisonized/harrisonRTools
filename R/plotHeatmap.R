@@ -3,6 +3,7 @@
 #' plots a heatmap
 #' @examples
 #' plotHeatmap(df, title="Raw Data", show_xlabel=TRUE, show_ylabel=TRUE, scientific_notation=FALSE, annotations=TRUE)
+#' @import ggplot2
 #' @export plotHeatmap
 plotHeatmap <- function(
    df,
