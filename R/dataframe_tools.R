@@ -1,3 +1,8 @@
+## Functions
+## rev_df
+## smelt
+
+
 #' Reverse a dataframe
 #' 
 #' @export

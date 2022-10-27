@@ -1,3 +1,8 @@
+## Functions
+## read_text
+## read_csv_from_text
+
+
 #' Read files ending in .txt
 #'
 #' Concatenates all the lines into a single string

@@ -1,3 +1,8 @@
+## Functions
+## plot_heatmap
+## plot_single_line
+
+
 #' Plot a heatmap
 #'
 #' @examples
