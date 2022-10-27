@@ -1,24 +1,108 @@
-#' plotLine
-#' @description
-#' plots a line plot with error bars
+#' Plot a heatmap
+#'
 #' @examples
-#' plotLine(df, title="Raw Data")
-#' @import ggplot2
-#' @export plotLine
-plotLine <- function(
+#' plot_heatmap(
+#'   df,
+#'   title="Raw Data",
+#'   show_xlabel=TRUE,
+#'   show_ylabel=TRUE,
+#'   annotations=TRUE,
+#'   scientific_notation=FALSE,
+#'   digits=0
+#' )
+#' @export
+plot_heatmap <- function(
    df,
-   x='x',
-   y='y',
-   error_y=NULL,
-   error_y_minus=NULL,
-   xlabel=NULL,
-   ylabel=NULL,
+   x='col',
+   y='row',
+   fill='val',
    title=NULL,
    show_xlabel=TRUE,
    show_ylabel=TRUE,
+   annotations=FALSE,
+   scientific_notation=FALSE,
+   digits=1
+) {
+    
+    tab <- smelt(rev_df(df))  # reshape
+
+    # axis labels
+    if (show_xlabel) {
+        xlabel = ggplot2::element_text()
+    } else {
+        xlabel = ggplot2::element_blank()
+    }
+    if (show_ylabel) {
+        ylabel = ggplot2::element_text()
+    } else {
+        ylabel = ggplot2::element_blank()
+    }
+
+    # annotations
+    if (annotations) {
+    	label = 'label'
+        if (scientific_notation) {
+            tab['label'] = lapply(
+                tab['val'], 
+                function(x) formatC(x, format='e', digits=2)
+            )
+        } else {
+        	tab['label'] = lapply(
+                tab['val'], 
+                function(x) round(x, digits)
+            )
+        }
+    } else {
+        label = NULL
+    }
+
+    # plot
+    ggplot2::ggplot(tab, ggplot2::aes_string(x=x, y=y, fill=fill)) +
+        ggplot2::geom_tile(color="white", lwd=0.3, linetype=1) +
+        ggplot2::coord_fixed(expand=TRUE) +
+        ggplot2::scale_y_discrete(limits=rev) +
+        ggplot2::labs(title = title) +
+        ggplot2::theme(plot.title = ggplot2::element_text(size = 10),
+                       axis.title.x = xlabel,
+                       axis.title.y = ylabel) +
+        ggplot2::scale_fill_gradient(low="#FFF8F8", high="#A50026") +
+        if (annotations) {
+            ggplot2::geom_text(
+                ggplot2::aes_string(label=label),
+                color = 'black',
+                size = 2
+            )
+        }
+}
+
+
+#' Plot a single line plot with directional error bars
+#' @examples
+#' plot_single_line(
+#'   df,
+#'   x='x', y='y',
+#'   xlabel='X Axis', ylabel='Y Axis',
+#'   title='Raw Data',
+#'   error_y='plus_e',  # error_y_minus='minus_e',
+#'   show_legend=FALSE,
+#'   error_bar_width=2,
+#'   palette="Set2"
+#' )
+#' @export
+plot_single_line <- function(
+   df,
+   x='x',
+   y='y',
+   xlabel=NULL,
+   ylabel=NULL,
+   title=NULL,
+   error_y=NULL,
+   error_y_minus=NULL,
+   show_xlabel=TRUE,
+   show_ylabel=TRUE,
    show_legend=TRUE,
-   palette="Set1",
-   error_bar_width = 1
+   error_bar_width = 1,
+   palette="Set2"
 ) {
 
     df[, 'group'] = x

@@ -1,18 +1,39 @@
-#' readCsvFromText
-#' @description
-#' Convenience function for reading text files where csv may be embedded
-#' Use the following settings for 96-well plates:
-#' @examples
-#' df <- readCsvFromText(
-#'            filePath,
-#'            skiprows=3, nrows=8,
-#'            skipcols=2, ncols=12,
-#'            index=LETTERS[1:8],
-#'            columns=seq(1, 12)
-#' )
-#' @export readCsvFromText
-readCsvFromText <- function(
+#' Read files ending in .txt
+#'
+#' Concatenates all the lines into a single string
+#'
+#' @export
+read_text <- function(
     filePath,
+    encoding='UTF-8',
+    sep='\n'
+) {
+
+    con = file(filePath, encoding=encoding)
+    lines <- readLines(con)
+    close(con)
+
+    rawString <- paste(lines, collapse = sep)
+
+    return(rawString)
+}
+
+#' Reads and parses csv embedded in .txt files
+#'
+#' This is useful for data exported from plate readers
+#' 
+#' @examples
+#' # for 96-well plates:
+#' df <- read_csv_from_text(
+#'   file_path,
+#'   skiprows=3, nrows=8,
+#'   skipcols=2, ncols=12,
+#'   index=LETTERS[1:8],
+#'   columns=seq(1, 12)
+#' )
+#' @export
+read_csv_from_text <- function(
+    file_path,
     encoding='UTF-16', sep='\t',
     skiprows=0, nrows=NULL,
     skipcols=0, ncols=NULL,
