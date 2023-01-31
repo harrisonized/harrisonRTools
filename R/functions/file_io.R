@@ -9,12 +9,12 @@
 #'
 #' @export
 read_text <- function(
-    filePath,
+    file_path,
     encoding='UTF-8',
     sep='\n'
 ) {
 
-    con = file(filePath, encoding=encoding)
+    con = file(file_path, encoding=encoding)
     lines <- readLines(con)
     close(con)
 
@@ -47,7 +47,7 @@ read_csv_from_text <- function(
     numeric=FALSE
 ) {
 
-    con = file(filePath, encoding=encoding)
+    con = file(file_path, encoding=encoding)
     rawData <- readLines(con)
     close(con)
     

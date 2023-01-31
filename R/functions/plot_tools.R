@@ -62,7 +62,7 @@ plot_heatmap <- function(
     }
 
     # plot
-    ggplot2::ggplot(tab, ggplot2::aes_string(x=x, y=y, fill=fill)) +
+    fig <- ggplot2::ggplot(tab, ggplot2::aes_string(x=x, y=y, fill=fill)) +
         ggplot2::geom_tile(color="white", lwd=0.3, linetype=1) +
         ggplot2::coord_fixed(expand=TRUE) +
         ggplot2::scale_y_discrete(limits=rev) +
@@ -78,6 +78,8 @@ plot_heatmap <- function(
                 size = 2
             )
         }
+
+    return (fig)
 }
 
 
@@ -144,7 +146,7 @@ plot_single_line <- function(
 
 
     # plot
-    ggplot2::ggplot(df, ggplot2::aes_string(x=x, y=y, color='group')) +
+    fig <- ggplot2::ggplot(df, ggplot2::aes_string(x=x, y=y, color='group')) +
         ggplot2::geom_line(ggplot2::aes_string(color='group'), show.legend = show_legend) +
         ggplot2::geom_point(ggplot2::aes_string(color='group'), show.legend = show_legend) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = 10),
@@ -183,4 +185,6 @@ plot_single_line <- function(
                 )
             }
         )
+
+    return (fig)
 }
