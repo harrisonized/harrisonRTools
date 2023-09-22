@@ -1,9 +1,12 @@
+# library('Matrix')
+
 ## Functions
 ## list_files
 ## join_many_csv
 ## append_many_csv
 ## read_text
 ## read_csv_from_text
+## read_10x
 
 
 #' list all files in all subdirectories with a given extension
@@ -146,4 +149,29 @@ read_csv_from_text <- function(
     }
 
     return(df)
+}
+
+
+#' Alternative to Seurat::Read10x that enables you to specify the filenames
+#'
+#' @export
+read_10x <- function(
+    data_dir,
+    matrix_file='matrix.mtx',
+    genes_file='genes.tsv',
+    barcodes_file='barcodes.tsv'
+) {
+
+    expr_mtx <- Matrix::readMM(file.path(data_dir, matrix_file))
+    genes <- read_tsv(file.path(data_dir, genes_file), col_names=FALSE, show_col_types = FALSE)
+    barcodes <- read_tsv(file.path(data_dir, barcodes_file), col_names=FALSE, show_col_types = FALSE)
+
+    colnames(expr_mtx) <- barcodes[['X1']]  # barcode sequence
+    rownames(expr_mtx) <- genes[['X2']]  # gene names
+
+    # Return dgCMatrix instead of dgTMatrix
+    # See: https://slowkow.com/notes/sparse-matrix/#the-triplet-format-in-dgtmatrix
+    expr_mtx <- as(expr_mtx, "CsparseMatrix")
+
+    return(expr_mtx)
 }
