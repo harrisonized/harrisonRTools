@@ -1,4 +1,6 @@
 # library('Matrix')
+wd = dirname(dirname(this.path::here()))
+source(file.path(wd, 'R', 'functions', 'list_tools.R')) 
 
 ## Functions
 ## list_files
@@ -161,6 +163,16 @@ read_10x <- function(
     genes_file='genes.tsv',
     barcodes_file='barcodes.tsv'
 ) {
+
+    if (!file.exists(file.path(data_dir, matrix_file)) |
+        !file.exists(file.path(data_dir, genes_file)) |
+        !file.exists(file.path(data_dir, barcodes_file))) {
+
+        filenames = basename(list_files(data_dir))
+        matrix_file = filter_list_for_match(filenames, 'matrix')
+        genes_file = filter_list_for_match(filenames, 'genes')
+        barcodes_file = filter_list_for_match(filenames, 'barcodes')
+    }
 
     expr_mtx <- Matrix::readMM(file.path(data_dir, matrix_file))
     genes <- read_tsv(file.path(data_dir, genes_file), col_names=FALSE, show_col_types = FALSE)
