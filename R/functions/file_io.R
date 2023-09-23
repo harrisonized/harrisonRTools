@@ -155,6 +155,7 @@ read_csv_from_text <- function(
 
 
 #' Alternative to Seurat::Read10x that enables you to specify the filenames
+#' See: https://github.com/satijalab/seurat/issues/4096
 #'
 #' @export
 read_10x <- function(
@@ -184,6 +185,14 @@ read_10x <- function(
     # Return dgCMatrix instead of dgTMatrix
     # See: https://slowkow.com/notes/sparse-matrix/#the-triplet-format-in-dgtmatrix
     expr_mtx <- as(expr_mtx, "CsparseMatrix")
+
+    # Note: the above is equivalent to this, but is more explicit
+    # expr_mtx <- Matrix::ReadMtx(
+    #     mtx=file.path(data_dir, matrix_file),
+    #     cells=file.path(data_dir, barcodes_file),
+    #     features=file.path(data_dir, genes_file),
+    #     feature.column=2
+    # )
 
     return(expr_mtx)
 }
