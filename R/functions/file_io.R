@@ -9,6 +9,7 @@ source(file.path(wd, 'R', 'functions', 'list_tools.R'))
 ## read_text
 ## read_csv_from_text
 ## read_10x
+## load_rdata
 
 
 #' list all files in all subdirectories with a given extension
@@ -195,4 +196,15 @@ read_10x <- function(
     # )
 
     return(expr_mtx)
+}
+
+
+#' loads an RData file, and returns it
+#' Without this function, base R uses the filename as the variable name
+#' See: https://stackoverflow.com/questions/5577221/can-i-load-a-saved-r-object-into-a-new-object-name
+#' 
+#' @export
+load_rdata <- function(filepath){
+    load(filepath)
+    return( get(ls()[ls() != "filepath"]) )
 }
