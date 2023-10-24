@@ -8,6 +8,7 @@ source(file.path(wd, 'R', 'functions', 'list_tools.R'))
 ## append_many_csv
 ## read_text
 ## read_csv_from_text
+## read_excel_or_csv
 ## read_10x
 ## load_rdata
 
@@ -151,6 +152,23 @@ read_csv_from_text <- function(
         df[] <- lapply(df, function(x) as.numeric(as.character(x)))
     }
 
+    return(df)
+}
+
+
+#' switch case to read excel or csv based on the extension
+#' 
+#' @export
+read_excel_or_csv <- function(filepath) {
+    ext=tools::file_ext(filepath)
+    if (ext == 'xlsx') {
+        df <- read_excel(filepath)
+    } else if (ext == 'csv') {
+        df <- read.csv(filepath, header=TRUE)
+    } else {
+        log_print(paste(Sys.time(), 'Please enter a xlsx or csv file.'))
+        stop()
+    }
     return(df)
 }
 
