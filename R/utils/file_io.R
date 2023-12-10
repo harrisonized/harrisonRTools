@@ -1,6 +1,8 @@
-# library('Matrix')
-wd = dirname(dirname(this.path::here()))
-source(file.path(wd, 'R', 'functions', 'list_tools.R')) 
+import::here(readxl, 'read_excel')
+import::here(Matrix, 'readMM')
+import::here(readr, 'read_tsv')
+import::here(file.path(wd, 'R', 'utils', 'list_tools.R'),
+    'filter_list_for_match', .character_only=TRUE)
 
 ## Functions
 ## list_files
@@ -194,7 +196,7 @@ read_10x <- function(
         barcodes_file = filter_list_for_match(filenames, 'barcodes')
     }
 
-    expr_mtx <- Matrix::readMM(file.path(data_dir, matrix_file))
+    expr_mtx <- readMM(file.path(data_dir, matrix_file))
     genes <- read_tsv(file.path(data_dir, genes_file), col_names=FALSE, show_col_types = FALSE)
     barcodes <- read_tsv(file.path(data_dir, barcodes_file), col_names=FALSE, show_col_types = FALSE)
 

@@ -1,7 +1,6 @@
-source(file.path(
-    dirname(dirname(this.path::here())),  # wd
-    'R', 'functions', 'list_tools.R')
-) 
+import::here(tidyr, 'pivot_wider')
+import::here(file.path(wd, 'R', 'utils', 'list_tools.R'),
+    'items_in_a_not_b', 'replace_specific_items', .character_only=TRUE)
 
 ## Functions
 ## rename_columns
@@ -89,7 +88,7 @@ pivot <- function(df, columns, values) {
     # Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
     # See: http://romainfrancois.blog.free.fr/index.php?post/2009/05/20/Disable-specific-warnings
     withCallingHandlers({
-        tibble_obj = tidyr::pivot_wider(
+        tibble_obj = pivot_wider(
             df,
             names_from = columns,
             values_from = values,

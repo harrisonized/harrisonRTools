@@ -1,4 +1,4 @@
-import::from('stringi', 'stri_replace_all_regex', .character_only=TRUE)
+import::from(stringi, 'stri_replace_all_regex')
 
 ## Functions
 ## check_if_a_in_b
