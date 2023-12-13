@@ -1,8 +1,8 @@
 import::here(readxl, 'read_excel')
 import::here(Matrix, 'readMM')
 import::here(readr, 'read_tsv')
-import::here(file.path(wd, 'R', 'utils', 'list_tools.R'),
-    'filter_list_for_match', .character_only=TRUE)
+# import::here(file.path(wd, 'R', 'utils', 'list_tools.R'),
+#     'filter_list_for_match', .character_only=TRUE)
 
 ## Functions
 ## list_files
@@ -191,9 +191,9 @@ read_10x <- function(
         !file.exists(file.path(data_dir, barcodes_file))) {
 
         filenames = basename(list_files(data_dir))
-        matrix_file = filter_list_for_match(filenames, 'matrix')
-        genes_file = filter_list_for_match(filenames, 'genes')
-        barcodes_file = filter_list_for_match(filenames, 'barcodes')
+        matrix_file = harrisonRTools::filter_list_for_match(filenames, 'matrix')
+        genes_file = harrisonRTools::filter_list_for_match(filenames, 'genes')
+        barcodes_file = harrisonRTools::filter_list_for_match(filenames, 'barcodes')
     }
 
     expr_mtx <- readMM(file.path(data_dir, matrix_file))
