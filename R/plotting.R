@@ -3,9 +3,9 @@
 ## plot_single_line
 
 
-#' Plot a heatmap
+#' Create a heatmap
 #'
-#' @examples
+#' @usage
 #' plot_heatmap(
 #'   df,
 #'   title="Raw Data",
@@ -15,6 +15,7 @@
 #'   scientific_notation=FALSE,
 #'   digits=0
 #' )
+#' 
 #' @export
 plot_heatmap <- function(
    df,
@@ -83,8 +84,11 @@ plot_heatmap <- function(
 }
 
 
+#' Create a line plot
+#' 
 #' Plot a single line plot with directional error bars
-#' @examples
+#' 
+#' @usage
 #' plot_single_line(
 #'   df,
 #'   x='x', y='y',
@@ -95,6 +99,7 @@ plot_heatmap <- function(
 #'   error_bar_width=2,
 #'   palette="Set2"
 #' )
+#' 
 #' @export
 plot_single_line <- function(
    df,

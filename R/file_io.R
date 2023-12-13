@@ -1,28 +1,35 @@
 import::here(readxl, 'read_excel')
 import::here(Matrix, 'readMM')
 import::here(readr, 'read_tsv')
+# import::here(Seurat, 'Read10X')
 # import::here(file.path(wd, 'R', 'utils', 'list_tools.R'),
 #     'filter_list_for_match', .character_only=TRUE)
 
 ## Functions
 ## list_files
-## join_many_csv
 ## append_many_csv
-## read_text
+## join_many_csv
+## load_rdata
 ## read_csv_from_text
 ## read_excel_or_csv
+## read_text
 ## read_10x
-## load_rdata
 
 
-#' list all files in all subdirectories with a given extension
+#' List all files with a specific extension
+#' 
+#' @description
+#' This is a thin wrapper around [list.files()].
+#' 
+#' @references
+#' \href{https://stackoverflow.com/questions/7187442/filter-a-vector-of-strings-based-on-string-matching}{StackOverflow post}
 #' 
 #' @export
 list_files <- function(dir_path, ext=NULL, recursive = TRUE) {
     all_files = list.files(dir_path, recursive = recursive, full.name=TRUE)
 
     if (!is.null(ext)) {
-        # See: https://stackoverflow.com/questions/7187442/filter-a-vector-of-strings-based-on-string-matching
+        # See: 
         return (all_files[tools::file_ext(all_files)==ext])
     } else {
         return (all_files)
@@ -30,10 +37,27 @@ list_files <- function(dir_path, ext=NULL, recursive = TRUE) {
 }
 
 
+#' Aggregate csv files by appending them rowwise
+#' 
+#' @description
+#' Read all the csv files from a directory and append them into a single dataframe
+#' 
+#' @export
+append_many_csv <- function(dir_path, sep='\t', row_names=1) {
+    filenames <- list.files(dir_path, full.names=TRUE)
+    csv <- lapply(filenames, read.csv, sep=sep, row.names=row_names)
+    data <- do.call(rbind, csv)
+    return(data)
+}
+
+
+#' Aggregate csv files by joining them column-wise
+#' 
+#' @description
 #' Read all the csv files from a directory and left join them into a single dataframe
-#' See: https://stackoverflow.com/questions/5319839/read-multiple-csv-files-into-separate-all_reads-frames
-#' index_cols=c('gene_id', 'gene_name', 'chromosome')
-#' index_cols=c('count')
+#' 
+#' @references
+#' \href{https://stackoverflow.com/questions/5319839/read-multiple-csv-files-into-separate-all_reads-frames}{StackOverflow post}
 #' 
 #' @export
 join_many_csv <- function(dir_path, index_cols, value_cols, ext='csv', recursive=TRUE, sep=',') {
@@ -69,44 +93,27 @@ join_many_csv <- function(dir_path, index_cols, value_cols, ext='csv', recursive
 }
 
 
-#' Read all the csv files from a directory and append them into a single dataframe
-#' This is missing the filename column for now
+#' Loads an RData file and allows you to store it in a chosen variable
+#' 
+#' @description
+#' Without this function, base R uses the filename as the variable name
+#' 
+#' @references
+#' \href{https://stackoverflow.com/questions/5577221/can-i-load-a-saved-r-object-into-a-new-object-name}{StackOverflow post}
 #' 
 #' @export
-append_many_csv <- function(dir_path, sep='\t', row_names=1) {
-    filenames <- list.files(dir_path, full.names=TRUE)
-    csv <- lapply(filenames, read.csv, sep=sep, row.names=row_names)
-    data <- do.call(rbind, csv)
-    return(data)
-}
-
-
-#' Read files ending in .txt
-#'
-#' Concatenates all the lines into a single string
-#'
-#' @export
-read_text <- function(
-    file_path,
-    encoding='UTF-8',
-    sep='\n'
-) {
-
-    con = file(file_path, encoding=encoding)
-    lines <- readLines(con)
-    close(con)
-
-    rawString <- paste(lines, collapse = sep)
-
-    return(rawString)
+load_rdata <- function(filepath){
+    load(filepath)
+    return( get(ls()[ls() != "filepath"]) )
 }
 
 
 #' Reads and parses csv embedded in .txt files
 #'
+#' @description
 #' This is useful for data exported from plate readers
 #' 
-#' @examples
+#' @usage
 #' # for 96-well plates:
 #' df <- read_csv_from_text(
 #'   file_path,
@@ -115,6 +122,7 @@ read_text <- function(
 #'   index=LETTERS[1:8],
 #'   columns=seq(1, 12)
 #' )
+#' 
 #' @export
 read_csv_from_text <- function(
     file_path,
@@ -158,7 +166,19 @@ read_csv_from_text <- function(
 }
 
 
-#' switch case to read excel or csv based on the extension
+#' Switch case to read excel or csv based on the extension
+#'
+#' @description Mainly used to simplify scripts
+#' 
+#' @usage
+#' # for 96-well plates:
+#' df <- read_csv_from_text(
+#'     file_path,
+#'     skiprows=3, nrows=8,
+#'     skipcols=2, ncols=12,
+#'     index=LETTERS[1:8],
+#'     columns=seq(1, 12)
+#' )
 #' 
 #' @export
 read_excel_or_csv <- function(filepath) {
@@ -175,9 +195,36 @@ read_excel_or_csv <- function(filepath) {
 }
 
 
-#' Alternative to Seurat::Read10x that enables you to specify the filenames
-#' See: https://github.com/satijalab/seurat/issues/4096
+#' Read files ending in .txt
 #'
+#' @description Concatenates all the lines into a single string separated by '\n'
+#'
+#' @export
+read_text <- function(
+    file_path,
+    encoding='UTF-8',
+    sep='\n'
+) {
+
+    con = file(file_path, encoding=encoding)
+    lines <- readLines(con)
+    close(con)
+
+    rawString <- paste(lines, collapse = sep)
+
+    return(rawString)
+}
+
+
+#' Alternative to  that enables you to specify the filenames
+#'
+#' @description Mainly used to simplify scripts
+#' 
+#' @references
+#'\href{https://github.com/satijalab/seurat/issues/4096}{Github issue}
+#'
+#' @seealso [Seurat::Read10X()]
+#' 
 #' @export
 read_10x <- function(
     data_dir,
@@ -191,9 +238,9 @@ read_10x <- function(
         !file.exists(file.path(data_dir, barcodes_file))) {
 
         filenames = basename(list_files(data_dir))
-        matrix_file = harrisonRTools::filter_list_for_match(filenames, 'matrix')
-        genes_file = harrisonRTools::filter_list_for_match(filenames, 'genes')
-        barcodes_file = harrisonRTools::filter_list_for_match(filenames, 'barcodes')
+        matrix_file = filter_list_for_match(filenames, 'matrix')
+        genes_file = filter_list_for_match(filenames, 'genes')
+        barcodes_file = filter_list_for_match(filenames, 'barcodes')
     }
 
     expr_mtx <- readMM(file.path(data_dir, matrix_file))
@@ -216,15 +263,4 @@ read_10x <- function(
     # )
 
     return(expr_mtx)
-}
-
-
-#' loads an RData file, and returns it
-#' Without this function, base R uses the filename as the variable name
-#' See: https://stackoverflow.com/questions/5577221/can-i-load-a-saved-r-object-into-a-new-object-name
-#' 
-#' @export
-load_rdata <- function(filepath){
-    load(filepath)
-    return( get(ls()[ls() != "filepath"]) )
 }

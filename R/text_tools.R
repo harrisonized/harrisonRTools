@@ -1,12 +1,17 @@
 ## Functions
 ## dotsep_to_snake_case
 ## title_to_snake_case
-## txt_strip
 ## substr_right
+## txt_strip
 
 
-#' Converts "Column.Title" to column_title
-#'
+#' Standardize Dot-separated Titles
+#' 
+#' @description Converts "Column.Title" to column_title
+#' 
+#' @examples
+#' dotsep_to_snake_case('Column.Title')
+#' 
 #' @export
 dotsep_to_snake_case <- function(text) {
     return(tolower(
@@ -17,8 +22,13 @@ dotsep_to_snake_case <- function(text) {
 }
 
 
-#' Converts "Column Title" to column_title
-#'
+#' Standardize Space-separated Titles
+#' 
+#' @description Converts "Column Title" to column_title
+#' 
+#' @examples
+#' title_to_snake_case('Column Title')
+#' 
 #' @export
 title_to_snake_case <- function(text) {
     return(tolower(
@@ -29,8 +39,29 @@ title_to_snake_case <- function(text) {
 }
 
 
-#' Removes special characters from beginning and end of a string
+#' Extract last n characters
+#' 
+#' @description Extracts the last n characters from a string
+#' 
+#' @examples
+#' substr_right('hi there', 5)
+#' 
+#' @references
+#' \href{https://stackoverflow.com/questions/7963898/extracting-the-last-n-characters-from-a-string-in-r}{StackOverflow post}
 #'
+#' @export
+substr_right <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
+
+
+#' Remove leading and traling characters
+#' 
+#' @description Removes special characters from beginning and end of a string
+#' 
+#' @examples
+#' txt_strip(" hi there ", chars=" ")
+#' 
 #' @export
 txt_strip <- function(x, chars=' ') {
     chars <- unique(strsplit(chars, '')[[1]])
@@ -47,12 +78,3 @@ txt_strip <- function(x, chars=' ') {
     }
     return(x)
 }
-
-
-#' see: https://stackoverflow.com/questions/7963898/extracting-the-last-n-characters-from-a-string-in-r
-#'
-#' @export
-substr_right <- function(x, n){
-  substr(x, nchar(x)-n+1, nchar(x))
-}
-
