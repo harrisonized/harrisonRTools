@@ -1,5 +1,5 @@
 import::here(tidyr, 'pivot_wider')
-# import::here(file.path(wd, 'R', 'utils', 'list_tools.R'),
+# import::here(file.path(wd, 'R', 'tools', 'list_tools.R'),
 #     'items_in_a_not_b', 'replace_specific_items', .character_only=TRUE)
 
 ## Functions
@@ -191,7 +191,6 @@ rename_columns <- function(df, columns, inplace=FALSE) {
     df_name <- deparse(substitute(df))
     colnames(df) <- replace_specific_items(colnames(df), columns)
     if (inplace) {
-        # see: https://stackoverflow.com/questions/3969852/update-data-frame-via-function-doesnt-work
         assign(df_name, df, envir=.GlobalEnv)
     } else {
         return(df)

@@ -22,3 +22,6 @@ check_if_a_in_b(1, c(1, 2, 3))
 check_if_a_in_b(0, c(1, 2, 3))
 
 }
+\references{
+\href{https://stackoverflow.com/questions/53086053/how-to-check-if-a-list-contains-a-certain-element-in-r}{Stack Overflow}
+}
