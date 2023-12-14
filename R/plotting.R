@@ -16,6 +16,9 @@
 #'   digits=0
 #' )
 #' 
+#' @section Vignette:
+#' See `vignettes/plot_heatmap.Rmd`
+#' 
 #' @export
 plot_heatmap <- function(
    df,

@@ -17,3 +17,8 @@ plot_heatmap(
 \description{
 Create a heatmap
 }
+\section{Vignette}{
+
+See \code{vignettes/plot_heatmap.Rmd}
+}
+

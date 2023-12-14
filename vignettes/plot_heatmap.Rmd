@@ -1,0 +1,39 @@
+---
+title: "Plot Heatmap"
+---
+
+```{r, include = TRUE}
+wd = "~/github/R/harrisonRTools"
+library(harrisonRTools)
+import::here(ggplot2, 'ggsave')
+save=FALSE
+
+# read csv
+df <- read_tsv_from_text(
+    file.path(wd, "data", "heatmap-data.txt"),
+    encoding="UTF-8",
+    skiprows=3, nrows=8,
+    skipcols=2, ncols=12,
+    columns=seq(1, 12), index=LETTERS[1:8],
+    numeric=TRUE
+)
+
+# plot
+fig <- plot_heatmap(
+    df,
+    title="Raw Data",
+    show_xlabel=TRUE, show_ylabel=TRUE,
+    annotations=TRUE,
+    scientific_notation=FALSE,
+    digits=3
+)
+
+# save
+if (save) {
+    ggsave(file.path(wd, "figures", "heatmap-example", "heatmap.png"),
+           height=750, width=1200, units="px",
+           dpi=300, scaling=0.5)
+}
+
+show(fig)
+```
