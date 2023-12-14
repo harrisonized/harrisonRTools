@@ -1,22 +1,25 @@
 ## harrisonRTools
 
-This is a general purpose R repository for my own use, mainly for analyzing and plotting biological data.
+This is my [personal R package](https://hilaryparker.com/2013/04/03/personal-r-packages/) containing convenience functions used across all of my [R repositories](https://github.com/harrisonized?tab=repositories&q=language%3AR&type=public&language=r&sort=).
 
 ## Installation
 
-Install the following packages in R:
+1. Clone the repo:
 
-```R
-# regular packages
-install.packages('Matrix')
-install.packages('dplyr')
-install.packages("chromoMap")
-BiocManager::install("DropletUtils")
-BiocManager::install("ComplexHeatmap")
-BiocManager::install("EnhancedVolcano")
-```
+	```bash
+	git clone git@github.com:harrisonized/harrisonRTools.git
+	```
+	
+2. Install from RStudio:
+
+	```R
+	install.packages('~/path/to/harrisonRTools', repos=NULL, type="source")
+	```
+	
+## License
+
+This project is licensed under the terms of the [MIT license](LICENSE).
 
 ## Copyright
 
 This code is copyright by Harrison Wang in 2022.
-

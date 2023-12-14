@@ -1,0 +1,17 @@
+ref
+data
+figures
+data/ref
+figures/python
+R/archive
+log
+notebooks
+renv
+renv.lock
+.Rproj.user
+.Rhistory
+.Rbuildignore
+.Rprofile
+.DS_Store
+.Rproj.user
+.ipynb_checkpoints

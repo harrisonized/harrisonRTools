@@ -1,11 +1,25 @@
 Package: harrisonRTools
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 1.0.0
+Title: Harrison's R Tools
+Description: Dumping ground of useful functions.
 Authors@R: 
     person("Harrison", "Wang", , "harrison.c.wang@gmail.com", role = c("aut", "cre"),
-           comment = c())
-Description: What the package does (one paragraph).
+           comment=c(ORCID = "0000-0002-5311-1375"))
+Imports:
+    ggplot2,
+    Matrix,
+    readr,
+    readxl,
+    stringi,
+    tidyr
+Suggests:
+    Seurat,
+    testthat,
+    devtools,
+    roxygen2
 License: MIT
+URL: https://github.com/harrisonized/harrisonRTools
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+
