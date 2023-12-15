@@ -1,6 +1,32 @@
+## Objects
+## default_colors_plotly
+
 ## Functions
 ## plot_heatmap
 ## plot_single_line
+
+
+#' Plotly's default colors
+#' 
+#' @examples
+#' default_colors_plotly
+#' 
+#' @references
+#' \href{https://stackoverflow.com/questions/41761654/plotly-where-can-i-find-the-default-color-palette-used-in-plotly-package}{StackOverflow post}
+#' 
+#' @export
+default_colors_plotly = c(
+    "#1f77b4",  # blue
+    "#ff7f0e",  # orange
+    "#2ca02c",  # green
+    "#d62728",  # red
+    "#9467bd",  # purple
+    "#8c564b",  # brown
+    "#e377c2",  # pink
+    "#7f7f7f",  # gray
+    "#bcbd22",  # yellow
+    "#17becf"  # aqua
+)
 
 
 #' Create a heatmap

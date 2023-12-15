@@ -6,6 +6,7 @@ import::here(stringi, 'stri_replace_all_regex')
 ## find_first_match_index
 ## items_in_a_not_b
 ## multiple_replacement
+## n_items_from_list
 ## replace_specific_items
 
 
@@ -124,6 +125,25 @@ multiple_replacement <- function(items, replacements) {
     ))
 
     return (items)
+}
+
+
+#' Cycle
+#' 
+#' @description
+#' Repeats the list until the number of elements desired is returned
+#' 
+#' @param items list or vector
+#' @param n number of elements
+#' 
+#' @examples
+#' n_items_from_list(c('blue', 'orange', 'green', 'red', 'purple'), 8)
+#' 
+#' @export
+n_items_from_list <- function(items, n) {
+    num_items <- length(items)
+    num_cycles <- ceiling(n / num_items)
+    return(items[rep(1:num_items, num_cycles)[1:n]])
 }
 
 
