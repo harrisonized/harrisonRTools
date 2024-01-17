@@ -10,6 +10,7 @@ import::here(readr, 'read_tsv')
 ## append_many_csv
 ## join_many_csv
 ## load_rdata
+## read_csv_or_tsv
 ## read_excel_or_csv
 ## read_text
 ## read_tsv_from_text
@@ -108,19 +109,25 @@ load_rdata <- function(filepath){
 }
 
 
-#' Switch case to read excel or csv based on the extension
+#' Switch case to read csv or tsv based on the extension
 #'
 #' @description Mainly used to simplify scripts
 #' 
-#' @usage
-#' # for 96-well plates:
-#' df <- read_csv_from_text(
-#'     file_path,
-#'     skiprows=3, nrows=8,
-#'     skipcols=2, ncols=12,
-#'     index=LETTERS[1:8],
-#'     columns=seq(1, 12)
-#' )
+#' @export
+read_csv_or_tsv <- function(file, header=TRUE, sep=',', check_names=FALSE) {
+    ext = tools::file_ext(file)
+    if (ext == 'tsv') {
+        sep='\t'
+    }
+
+    data = read.csv(file, header=header, sep=sep, check.names=check_names)
+    return(data)
+}
+
+
+#' Switch case to read excel or csv based on the extension
+#'
+#' @description Mainly used to simplify scripts
 #' 
 #' @export
 read_excel_or_csv <- function(filepath) {
@@ -232,9 +239,9 @@ read_tsv_from_text <- function(
 }
 
 
-#' Alternative to  that enables you to specify the filenames
+#' Read 10X
 #'
-#' @description Mainly used to simplify scripts
+#' @description Alternative to [Seurat::Read10X()] that enables you to specify the filenames
 #' 
 #' @references
 #'\href{https://github.com/satijalab/seurat/issues/4096}{Github issue}

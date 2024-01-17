@@ -4,10 +4,12 @@ import::here(tidyr, 'pivot_wider')
 
 ## Functions
 ## append_dataframe
+## coalesce1
 ## dataframe_row_from_named_list
 ## fillna
 ## filter_dataframe_column_by_list
 ## get_unique_values
+## most_frequent_item
 ## pivot
 ## rename_columns
 ## reset_index
@@ -42,6 +44,22 @@ append_dataframe <- function(df1, df2, infront=FALSE, reset_index=TRUE) {
     }
 
     return(df)
+}
+
+
+#' Coalesce
+#' 
+#' @references
+#' \href{https://stackoverflow.com/questions/19253820/how-to-implement-coalesce-efficiently-in-r}{StackOverflow post}
+#' 
+#' @export
+coalesce1 <- function(...) {
+    ans <- ..1
+    for (elt in list(...)[-1]) {
+        i <- is.na(ans)
+        ans[i] <- elt[i]
+    }
+    ans
 }
 
 
@@ -136,6 +154,14 @@ get_unique_values <- function(df, cols) {
         items <- append(items, unique(df[[col]]))
     }
     return(sort(unique(items)))
+}
+
+
+#' Get the most frequently occurring item in a dataframe column
+#'
+#' @export
+most_frequent_item <- function(df, colname) {
+    return(df[which.max(factor(df[, colname])), colname])
 }
 
 

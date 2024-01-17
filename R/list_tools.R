@@ -2,6 +2,7 @@ import::here(stringi, 'stri_replace_all_regex')
 
 ## Functions
 ## check_if_a_in_b
+## dict_zip
 ## filter_list_for_match
 ## find_first_match_index
 ## items_in_a_not_b
@@ -31,6 +32,20 @@ check_if_a_in_b <- function(a, b) {
     return (as.logical(
         sum(unlist( lapply(b, function(x) ifelse(x==a,1,0)) ))
     ))
+}
+
+
+#' Dictionary
+#' 
+#' @description Simple dictionary implementation using R environment
+#'
+dict_zip <- function(keys, values) {
+    if (!is.list(values)) {
+        values <- as.list(values)
+    }
+    named_list <- setNames(values, keys)
+    env <- list2env(named_list)
+    return(env)
 }
 
 
