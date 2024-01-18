@@ -2,7 +2,7 @@
 % Please edit documentation in R/file_io.R
 \name{read_10x}
 \alias{read_10x}
-\title{Alternative to  that enables you to specify the filenames}
+\title{Read 10X}
 \usage{
 read_10x(
   data_dir,
@@ -12,7 +12,7 @@ read_10x(
 )
 }
 \description{
-Mainly used to simplify scripts
+Alternative to \code{\link[Seurat:Read10X]{Seurat::Read10X()}} that enables you to specify the filenames
 }
 \references{
 \href{https://github.com/satijalab/seurat/issues/4096}{Github issue}

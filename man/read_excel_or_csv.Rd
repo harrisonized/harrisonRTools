@@ -4,14 +4,7 @@
 \alias{read_excel_or_csv}
 \title{Switch case to read excel or csv based on the extension}
 \usage{
-# for 96-well plates:
-df <- read_csv_from_text(
-    file_path,
-    skiprows=3, nrows=8,
-    skipcols=2, ncols=12,
-    index=LETTERS[1:8],
-    columns=seq(1, 12)
-)
+read_excel_or_csv(filepath)
 }
 \description{
 Mainly used to simplify scripts

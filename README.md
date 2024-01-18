@@ -13,8 +13,14 @@ This is my [personal R package](https://hilaryparker.com/2013/04/03/personal-r-p
 2. Install from RStudio:
 
 	```R
-	install.packages('~/path/to/harrisonRTools', repos=NULL, type="source")
+	install.packages('/path/to/harrisonRTools', repos=NULL, type="source")
 	```
+	
+## Refresh Documentation
+
+```R
+devtools::document('/path/to/harrisonRTools')
+```
 	
 ## License
 
