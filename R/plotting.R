@@ -1,4 +1,4 @@
-# import::here(plotly, 'plot_ly', 'layout')
+# import::here(plotly, 'plot_ly', 'add_trace', 'layout')
 
 
 ## Objects
@@ -276,7 +276,7 @@ plot_multiscatter <- function(
         }
     }
 
-    fig <- plotly::plot_ly(
+    fig <- plotly::plot_ly() + plotly::add_trace(
         data = df,
         x = df[[x]],
         y = df[[y]],
