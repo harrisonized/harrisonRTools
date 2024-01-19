@@ -291,7 +291,7 @@ plot_multiscatter <- function(
         title = title,
         xaxis = list(
             title_text = xlabel,
-            showgrid = TRUE,
+            showgrid = TRUE, zeroline = FALSE,
             range = xrange,
             type = xaxis_type
         ),

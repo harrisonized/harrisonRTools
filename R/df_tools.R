@@ -47,19 +47,23 @@ append_dataframe <- function(df1, df2, infront=FALSE, reset_index=TRUE) {
 }
 
 
-#' Coalesce
+#' Coalesce Column Names
 #' 
-#' @references
-#' \href{https://stackoverflow.com/questions/19253820/how-to-implement-coalesce-efficiently-in-r}{StackOverflow post}
+#' @description
+#' Given a dataframe with columns with one-hot encodings,
+#' aggregates the column names into a comma-separated list
 #' 
 #' @export
-coalesce1 <- function(...) {
-    ans <- ..1
-    for (elt in list(...)[-1]) {
-        i <- is.na(ans)
-        ans[i] <- elt[i]
+coalesce_colnames <- function(df, cols, sep=', ') {
+
+    output <- ''
+    for (col in cols) {
+        output <- gsub('1', col, paste(output, gsub('0', '', df[[col]]), sep=sep))
+        output <- gsub(' ,', '', output)
     }
-    ans
+    output <- sub('^, ', '', output)
+    output <- sub(', $', '', output)
+    return(output)
 }
 
 
