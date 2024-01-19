@@ -133,7 +133,7 @@ multiple_replacement <- function(items, replacements) {
     replacements <- sapply(unname(replacements), function(x) gsub('\\\\', '$', x))
     
     items <- unname(sapply(items,
-        function(x) stri_replace_all_regex(
+        function(x) stringi::stri_replace_all_regex(
             x,
             pattern = patterns,
             replacement = replacements,
