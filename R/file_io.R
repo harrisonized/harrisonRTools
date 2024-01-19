@@ -44,7 +44,7 @@ list_files <- function(dir_path, ext=NULL, recursive = TRUE) {
 #' Read all the csv files from a directory and append them into a single dataframe
 #' 
 #' @export
-append_many_csv <- function(dir_path, sep='\t', row_names=NULL) {
+append_many_csv <- function(dir_path, sep=',', row_names=NULL) {
     filenames <- list.files(dir_path, full.names=TRUE)
     csv <- lapply(filenames, read.csv, sep=sep, row.names=row_names)
     data <- do.call(rbind, csv)
