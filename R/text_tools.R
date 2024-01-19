@@ -1,7 +1,10 @@
+## import::here(stringr, 'str_to_title')
+
 ## Functions
 ## camel_to_snake_case
 ## dotsep_to_snake_case
 ## title_to_snake_case
+## snake_to_title_case
 ## substr_right
 ## txt_strip
 
@@ -50,6 +53,19 @@ title_to_snake_case <- function(text) {
             unlist(strsplit(text, '[ ]')), collapse='_')
         )
     )
+}
+
+
+#' Standardize snake_case Titles
+#' 
+#' @description Converts column_title to "Column Title"
+#' 
+#' @examples
+#' snake_to_title_case('column_title')
+#' 
+#' @export
+snake_to_title_case <- function(text) {
+    return(stringr::str_to_title(gsub("_", " ", text)))
 }
 
 

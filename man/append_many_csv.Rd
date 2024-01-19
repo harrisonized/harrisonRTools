@@ -4,7 +4,7 @@
 \alias{append_many_csv}
 \title{Aggregate csv files by appending them rowwise}
 \usage{
-append_many_csv(dir_path, sep = "\\t", row_names = NULL)
+append_many_csv(dir_path, sep = ",", row_names = NULL)
 }
 \description{
 Read all the csv files from a directory and append them into a single dataframe
