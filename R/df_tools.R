@@ -1,4 +1,5 @@
 import::here(tidyr, 'pivot_wider')
+# import::here(reshape2, 'melt')
 # import::here(file.path(wd, 'R', 'tools', 'list_tools.R'),
 #     'items_in_a_not_b', 'replace_specific_items', .character_only=TRUE)
 
@@ -9,6 +10,7 @@ import::here(tidyr, 'pivot_wider')
 ## fillna
 ## filter_dataframe_column_by_list
 ## get_unique_values
+## multi_melt
 ## most_frequent_item
 ## pivot
 ## rename_columns
@@ -158,6 +160,47 @@ get_unique_values <- function(df, cols) {
         items <- append(items, unique(df[[col]]))
     }
     return(sort(unique(items)))
+}
+
+
+#' Multiple melt
+#' 
+#' @description Unpivot multiple columns simulataneously
+#' 
+#' @export
+multi_melt <- function(
+    df,
+    id_vars=c('id', 'name'),
+    values=list(
+        'metric_1'=c('metric_1_x', 'metric_1_y'),
+        'metric_2'=c('metric_2_x', 'metric_2_y')
+    ),
+    var_name='variable'
+) {
+
+    dfs = new.env()
+    for (value_name in names(values)) {
+        value_vars <- values[[value_name]]
+        tmp = reshape2::melt(
+            df[, c(id_vars, value_vars)],
+            row=id_vars,
+            measure.vars=value_vars,
+            value.name=value_name,
+            variable.name=var_name
+        )
+
+        tmp[var_name] = sub(paste0(value_name, '_'), '', tmp[[var_name]])
+        
+        dfs[[value_name]] <- tmp
+    }
+    dfs <- as.list(dfs)
+
+    merged <- Reduce(
+        function(...) merge(..., by=(c(id_vars, var_name))),
+        dfs
+    )
+
+    return(merged)
 }
 
 
