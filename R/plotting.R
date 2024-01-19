@@ -1,5 +1,5 @@
+import::here(magrittr, '%>%')
 # import::here(plotly, 'plot_ly', 'add_trace', 'layout')
-
 
 ## Objects
 ## default_colors_plotly
@@ -230,6 +230,7 @@ plot_single_line <- function(
 
 #' Plot Multiple Scatter
 #' 
+#' @export
 plot_multiscatter <- function(
     df, x, y, color, size=NULL,
     xlabel=NULL, ylabel=NULL, clabel=NULL, title=NULL,

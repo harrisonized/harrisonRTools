@@ -39,6 +39,7 @@ check_if_a_in_b <- function(a, b) {
 #' 
 #' @description Simple dictionary implementation using R environment
 #'
+#' @export
 dict_zip <- function(keys, values) {
     if (!is.list(values)) {
         values <- as.list(values)
