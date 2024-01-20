@@ -402,10 +402,11 @@ plot_gel <- function(
             categoryarray = column_order
         ),
         yaxis = list(
+            showgrid = FALSE,
+            zeroline = FALSE,
             type = 'log',
             range = yrange,
             ticks = 'outside',
-            showline = TRUE,
             title_text = ylabel
         ),
         legend = list(
