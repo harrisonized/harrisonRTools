@@ -1,6 +1,8 @@
 import::here(readxl, 'read_excel')
 import::here(Matrix, 'readMM')
 import::here(readr, 'read_tsv')
+import::here(ggplot2, 'ggsave', 'last_plot')
+import::here(grid, 'grid.newpage', 'grid.draw')
 # import::here(Seurat, 'Read10X')
 # import::here(file.path(wd, 'R', 'tools', 'list_tools.R'),
 #     'filter_list_for_match', .character_only=TRUE)
@@ -15,6 +17,7 @@ import::here(readr, 'read_tsv')
 ## read_text
 ## read_tsv_from_text
 ## read_10x
+## save_fig
 
 
 #' List all files with a specific extension
@@ -146,7 +149,7 @@ read_excel_or_csv <- function(filepath) {
 
 #' Read files ending in .txt
 #'
-#' @description Concatenates all the lines into a single string separated by '\n'
+#' @description Concatenates all the lines into a single string, separated by newline
 #'
 #' @export
 read_text <- function(
@@ -286,4 +289,54 @@ read_10x <- function(
     # )
 
     return(expr_mtx)
+}
+
+
+#' Save Figure
+#' 
+#' @description Switch case to reduce the number of lines in the main script
+#' 
+#' @export
+savefig <- function(
+    filepath,
+    fig=NULL,
+    height=800, width=1200, dpi=300, units="px", scaling=0.5,
+    makedir=FALSE,
+    troubleshooting=FALSE,
+    lib='ggplot',  # choose: ggplot, grid
+    default_ext = '.png'
+) {
+    if (!troubleshooting) {
+
+        # make directory
+        dirpath <- dirname(filepath)
+        if (makedir && !dir.exists(dirpath)) {
+            dir.create(dirpath, recursive=TRUE)
+        }
+
+        # add file extension if not included
+        if (tools::file_ext(filepath)=='') {
+            filepath <- paste0(filepath, default_ext)
+        }
+
+        if (lib=='ggplot') {
+            if (!inherits(fig, "ggplot")) {
+                fig <- last_plot()
+            }
+            ggsave(
+                filepath,
+                plot=fig,
+                height=height, width=width, dpi=dpi, units=units, scaling=scaling
+            )
+        } else if (lib=='grid') {
+            png(filepath,
+                height=height, width=width, res=dpi, units=units
+            )
+            grid.newpage()
+            grid.draw(fig$gtable)
+            dev.off()
+        } else {
+            warning(paste0("lib='", lib, "' not found"))
+        }
+    }
 }

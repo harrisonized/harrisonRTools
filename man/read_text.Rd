@@ -7,5 +7,5 @@
 read_text(file_path, encoding = "UTF-8", sep = "\\n")
 }
 \description{
-Concatenates all the lines into a single string separated by '\n'
+Concatenates all the lines into a single string, separated by newline
 }
