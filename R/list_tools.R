@@ -68,6 +68,10 @@ chunker <- function(array_obj, num_elem=2) {
 #' @export
 collate <- function(array_obj, num_groups=2) {
 
+    if (num_groups >= length(array_obj)) {
+        return(as.list(array_obj))
+    }
+
     collated <- vector("list", length = num_groups)
     for (group_idx in 1:num_groups) {
         collated[[group_idx]] <- array_obj[seq(group_idx, length(array_obj), num_groups)]
