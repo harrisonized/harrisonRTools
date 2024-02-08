@@ -1,3 +1,4 @@
+## import::here(digest, 'sha1')
 ## import::here(stringr, 'str_to_title')
 
 ## Functions
@@ -5,6 +6,7 @@
 ## dotsep_to_snake_case
 ## title_to_snake_case
 ## snake_to_title_case
+## random_hash
 ## substr_right
 ## txt_strip
 
@@ -66,6 +68,19 @@ title_to_snake_case <- function(text) {
 #' @export
 snake_to_title_case <- function(text) {
     return(stringr::str_to_title(gsub("_", " ", text)))
+}
+
+
+#' Random Hash
+#' 
+#' @description Generates a Github style hash
+#' 
+#' @examples
+#' random_hash()
+#' 
+#' @export
+random_hash <- function(digits=6) {
+    return(substr(digest::sha1(runif(1, 1, 2^31-1), digits = 14), 1, digits))
 }
 
 
