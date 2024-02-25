@@ -1,7 +1,7 @@
 import::here(magrittr, '%>%')
 import::here(rlang, 'sym')
 import::here(ggplot2,
-    'ggplot', 'aes', 'theme', 'theme_bw', 'labs', 
+    'ggplot', 'aes', 'aes_string', 'theme', 'theme_bw', 'labs', 
     'geom_violin', 'geom_boxplot', 'geom_jitter',
     'geom_point', 'geom_hline', 'geom_vline', 'geom_segment', 'geom_bar',
     'guides', 'guide_axis', 'guide_legend',
@@ -211,7 +211,7 @@ plot_gel <- function(
 }
 
 
-#' Create a heatmap
+#' Plot Heatmap
 #'
 #' @usage
 #' plot_heatmap(
@@ -274,8 +274,8 @@ plot_heatmap <- function(
     }
 
     # plot
-    fig <- ggplot2::ggplot(tab, ggplot2::aes_string(x=x, y=y, fill=fill)) +
-        ggplot2::geom_tile(color="white", lwd=0.3, linetype=1) +
+    fig <- ggplot2::ggplot(tab, ggplot2::aes(x=.data[[x]], y=.data[[y]], fill=.data[[fill]])) +
+        ggplot2::geom_tile(color="white", lwd=0.3, linetype=1, na.rm=FALSE) +
         ggplot2::coord_fixed(expand=TRUE) +
         ggplot2::scale_y_discrete(limits=rev) +
         ggplot2::labs(title = title) +
@@ -285,9 +285,10 @@ plot_heatmap <- function(
         ggplot2::scale_fill_gradient(low="#FFF8F8", high="#A50026") +
         if (annotations) {
             ggplot2::geom_text(
-                ggplot2::aes_string(label=label),
+                ggplot2::aes(label=.data[[label]]),
                 color = 'black',
-                size = 2
+                size = 2,
+                na.rm=TRUE
             )
         }
 
@@ -506,9 +507,9 @@ plot_single_line <- function(
 
 
     # plot
-    fig <- ggplot2::ggplot(df, ggplot2::aes_string(x=x, y=y, color='group')) +
-        ggplot2::geom_line(ggplot2::aes_string(color='group'), show.legend = show_legend) +
-        ggplot2::geom_point(ggplot2::aes_string(color='group'), show.legend = show_legend) +
+    fig <- ggplot2::ggplot(df, ggplot2::aes(x=.data[[x]], y=.data[[y]], color=.data[['group']])) +
+        ggplot2::geom_line(ggplot2::aes(color=.data[['group']]), show.legend = show_legend) +
+        ggplot2::geom_point(ggplot2::aes(color=.data[['group']]), show.legend = show_legend) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = 10),
                        axis.title.x = x_title_elem,
                        axis.title.y = y_title_elem) +
@@ -519,7 +520,7 @@ plot_single_line <- function(
         list(
             if (yerrorbars) {
                 ggplot2::geom_errorbar(
-                    ggplot2::aes_string(ymin="ymin", ymax="ymax"),
+                    ggplot2::aes(ymin=.data[["ymin"]], ymax=.data[["ymax"]]),
                     width = 0,
                     show.legend = show_legend
                 )
@@ -527,9 +528,9 @@ plot_single_line <- function(
             if (yerrorbars && !is.null(error_y)) {
                 ggplot2::geom_segment(
                     data=df,
-                    ggplot2::aes_string(
-                        y="ymax", yend="ymax",
-                        x="xmin", xend="xmax"
+                    ggplot2::aes(
+                        y=.data[["ymax"]], yend=.data[["ymax"]],
+                        x=.data[["xmin"]], xend=.data[["xmax"]]
                     ),
                     show.legend = show_legend
                 )
@@ -537,9 +538,9 @@ plot_single_line <- function(
             if (yerrorbars && !is.null(error_y_minus)) {
                 ggplot2::geom_segment(
                     data=df,
-                    ggplot2::aes_string(
-                        y="ymin", yend="ymin",
-                        x="xmin", xend="xmax"
+                    ggplot2::aes(
+                        y=.data[["ymin"]], yend=.data[["ymin"]],
+                        x=.data[["xmin"]], xend=.data[["xmax"]]
                     ),
                     show.legend = show_legend
                 )

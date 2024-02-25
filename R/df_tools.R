@@ -8,6 +8,7 @@ import::here(tidyr, 'pivot_wider')
 ## coalesce1
 ## coalesce_colnames
 ## dataframe_row_from_named_list
+## df_to_plate
 ## fillna
 ## filter_dataframe_column_by_list
 ## get_unique_values
@@ -102,6 +103,57 @@ dataframe_row_from_named_list <- function(items) {
     rownames(df) <- 1
     colnames(df) <- names(items)
     return(df)
+}
+
+
+#' Dataframe to Plate
+#' 
+#' @description
+#' Reshape a column dataframe to a plate format
+#' 
+#' @export
+df_to_plate <- function(
+    df, well_id='well_position', value='ct',
+    num_wells=0
+) {
+
+    tmp <- df[, c(well_id, value)] %>%
+        group_by(!!sym(well_id)) %>%
+        summarize(!!(paste0('mean_', value)) := mean(!!sym(value), na.rm=TRUE))
+    tmp[['row']] = lapply(tmp[well_id], function(x) gsub("[^a-zA-Z]", "", x))[[1]]
+    tmp[['col']] = as.numeric(lapply(tmp[well_id], function(x) gsub("[^0-9]", "", x))[[1]])
+    tmp <- tmp[order(tmp$row, tmp$col),]
+
+    plate <- as.data.frame(pivot_wider(
+        tmp,
+        id_cols='row',
+        names_from='col',
+        values_from=paste0('mean_', value)
+    ))
+
+    # enforce grid
+    if (num_wells==96) {
+
+        # missing cols
+        for (col in items_in_a_not_b(1:12, colnames(plate))) {
+            plate[as.character(col)] <- NA
+        }
+
+        # misisng rows
+        missing_rownames <- items_in_a_not_b(LETTERS[1:8], plate[['row']])
+        if (length(missing_rownames) >= 1) {
+            missing_rows <- merge(
+                data.frame("row"=missing_rownames),
+                t(data.frame(rep(NA, 12), row.names=1:12))
+            )
+            plate <- rbind(plate, missing_rows)
+        }
+    }
+
+    plate <- plate[order(rownames(plate)), mixedsort((colnames(plate)))]
+    plate <- set_index(plate, colname='row')
+
+    return(plate)
 }
 
 
