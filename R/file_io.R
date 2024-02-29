@@ -17,7 +17,7 @@ import::here(grid, 'grid.newpage', 'grid.draw')
 ## read_text
 ## read_tsv_from_text
 ## read_10x
-## save_fig
+## savefig
 
 
 #' List all files with a specific extension
@@ -323,11 +323,20 @@ savefig <- function(
             if (!inherits(fig, "ggplot")) {
                 fig <- last_plot()
             }
-            ggsave(
-                filepath,
-                plot=fig,
-                height=height, width=width, dpi=dpi, units=units, scaling=scaling
-            )
+
+            withCallingHandlers({
+                ggsave(
+                    filepath,
+                    plot=fig,
+                    height=height, width=width, dpi=dpi, units=units, scaling=scaling
+                )
+            }, warning = function(w) {
+                if ( any(grepl("rows containing non-finite values", w),
+                         grepl("fewer than two data points", w)) ) {
+                    invokeRestart("muffleWarning")
+                }
+            })
+
         } else if (lib=='grid') {
             png(filepath,
                 height=height, width=width, res=dpi, units=units
