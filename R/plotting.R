@@ -245,14 +245,14 @@ plot_heatmap <- function(
 
     # axis labels
     if (show_xlabel) {
-        xlabel = ggplot2::element_text()
+        xtitle = ggplot2::element_text()
     } else {
-        xlabel = ggplot2::element_blank()
+        xtitle = ggplot2::element_blank()
     }
     if (show_ylabel) {
-        ylabel = ggplot2::element_text()
+        ytitle = ggplot2::element_text()
     } else {
-        ylabel = ggplot2::element_blank()
+        ytitle = ggplot2::element_blank()
     }
 
     # annotations
@@ -276,12 +276,12 @@ plot_heatmap <- function(
     # plot
     fig <- ggplot2::ggplot(tab, ggplot2::aes(x=.data[[x]], y=.data[[y]], fill=.data[[fill]])) +
         ggplot2::geom_tile(color="white", lwd=0.3, linetype=1, na.rm=FALSE) +
-        ggplot2::coord_fixed(expand=TRUE) +
         ggplot2::scale_y_discrete(limits=rev) +
+        ggplot2::coord_fixed(expand=TRUE) +
         ggplot2::labs(title = title) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = 10),
-                       axis.title.x = xlabel,
-                       axis.title.y = ylabel) +
+                       axis.title.x = xtitle,
+                       axis.title.y = ytitle) +
         ggplot2::scale_fill_gradient(low="#FFF8F8", high="#A50026") +
         if (annotations) {
             ggplot2::geom_text(
