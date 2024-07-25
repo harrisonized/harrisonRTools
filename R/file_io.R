@@ -136,7 +136,7 @@ read_csv_or_tsv <- function(file, header=TRUE, sep=',', check_names=FALSE) {
 read_excel_or_csv <- function(filepath) {
     ext=tools::file_ext(filepath)
     if (ext == 'xlsx') {
-        df <- read_excel(filepath)
+        df <- read_excel(filepath, .name_repair = "unique_quiet")
     } else if (ext == 'csv') {
         df <- read.csv(filepath, header=TRUE, check.names=FALSE)
     } else {
